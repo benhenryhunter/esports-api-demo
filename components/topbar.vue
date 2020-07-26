@@ -144,6 +144,7 @@ export default {
         padding: 10px;
         height: 60px;
         width: 60px;
+        cursor: pointer;
         .img {
           height: 100%;
           width: 100%;
