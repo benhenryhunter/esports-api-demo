@@ -1,0 +1,29 @@
+{
+  "name": "game_scrape_demo",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Benjamin Dickman",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/eslint-config": "^1.0.1",
+    "@nuxtjs/eslint-module": "^1.0.0",
+    "@nuxtjs/style-resources": "^1.0.0",
+    "axios": "^0.19.2",
+    "babel-eslint": "^10.0.1",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.1.0",
+    "eslint-plugin-nuxt": ">=0.4.2",
+    "lodash": "^4.17.19",
+    "moment": "^2.27.0",
+    "node-sass": "^4.14.1",
+    "nuxt": "^2.0.0",
+    "sass-loader": "^8.0.2"
+  },
+  "devDependencies": {}
+}
