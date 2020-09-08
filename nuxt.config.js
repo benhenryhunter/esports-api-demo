@@ -46,8 +46,15 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    'nuxt-socket-io'
   ],
+  io: {
+    sockets: [{
+      name: 'main',
+      url: 'http://localhost:8081'
+    }]
+  },
   /*
   ** Build configuration
   */

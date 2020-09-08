@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="right-actions">
-      <div class="action">
+      <div @click="toggleAll()" class="action">
         <p>Show All</p>
       </div>
       <div @click="toggleGame('smash')" class="action">
@@ -51,7 +51,7 @@ export default {
   },
   data () {
     return {
-      games: [
+      allGames: [
         'smash',
         'cod',
         'overwatch',
@@ -59,7 +59,13 @@ export default {
         'magic',
         'rlcs',
         'valorant'
-      ]
+      ],
+      games: [
+        'overwatch',
+        'csgo',
+        'rlcs'
+      ],
+      all: false
     }
   },
   mounted () {
@@ -74,6 +80,16 @@ export default {
         this.games.splice(this.games.indexOf(e), 1)
       } else {
         this.games.push(e)
+      }
+      this.$emit('toggleGames', this.games)
+    },
+    toggleAll () {
+      if (this.all) {
+        this.games = []
+        this.all = false
+      } else {
+        this.games = this.allGames
+        this.all = true
       }
       this.$emit('toggleGames', this.games)
     }
@@ -111,6 +127,7 @@ export default {
       align-items: center;
       .action-filter {
         padding: 0 10px;
+        text-transform: uppercase;
         &:hover {
           cursor: pointer;
           background-color: $hoverColor;
@@ -141,6 +158,11 @@ export default {
       margin-left: auto;
       max-height: 100%;
       .action {
+        text-transform: uppercase;
+        font-weight: bold;
+        p{
+          color:$blueGray;
+        }
         padding: 10px;
         height: 60px;
         width: 60px;

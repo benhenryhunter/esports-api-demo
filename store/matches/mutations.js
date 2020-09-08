@@ -21,5 +21,12 @@ export default {
   },
   [Mutation.SET_ERROR] (state, data) {
     state.error = data
+  },
+  [Mutation.CLEAR_MATCHES] (state) {
+    state.liveMatches = []
+    state.currentMonthMatches = []
+    state.lastMonthMatches = []
+    state.selectedMonthMatches = []
+    state.upcomingMatches = []
   }
 }

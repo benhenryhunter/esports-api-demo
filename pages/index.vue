@@ -51,12 +51,18 @@ import moment from 'moment'
 import Topbar from '~/components/topbar.vue'
 import Matchcard from '~/components/match_card.vue'
 import Matchbanner from '~/components/match_banner.vue'
-export const TEAM_IDS = [66, 76, 485, 626]
+export const TEAM_IDS = [431, 607, 702, 842, 885, 1066, 1275, 1690, 1970, 2012, 3635, 3977, 1275]
 export const GAMES_TO_ID = {
   'rlcs': 1,
   'overwatch': 2,
   'cod': 3,
-  'csgo': 4
+  'csgo': 4,
+  'valorant': 5,
+  'league of legends': 6,
+  'dota 2': 7,
+  'rainbow six': 8,
+  'fifa': 9,
+  'pubg': 10
 }
 export default {
   components: {
@@ -93,6 +99,13 @@ export default {
     }
   },
   async mounted () {
+    // const conn = new WebSocket('ws://localhost:8081/echo')
+    // conn.onclose = function (evt) {
+    //   console.log('close')
+    // }
+    // conn.onmessage = function (evt) {
+    //   console.log(evt)
+    // }
     const promises = [
       this.GET_THIS_MONTH_MATCHES({ gameIDs: this.gameIDs }),
       this.GET_LAST_MONTH_MATCHES({ gameIDs: this.gameIDs }),
@@ -107,7 +120,8 @@ export default {
       'GET_LAST_MONTH_MATCHES',
       'GET_SELECTED_MONTH_MATCHES',
       'GET_UPCOMING_MATCHES',
-      'SET_SELECTED_MONTH' ]),
+      'SET_SELECTED_MONTH',
+      'CLEAR_MATCHES' ]),
     fetchEvents () {
       this.GET_UPCOMING_MATCHES({ gameIDs: this.gameIDs })
       this.GET_THIS_MONTH_MATCHES({ gameIDs: this.gameIDs })
@@ -121,9 +135,13 @@ export default {
       console.log(e)
     },
     toggleGames (e) {
-      this.games = e
-      this.gameIDs = this.games.map(a => GAMES_TO_ID[a]).filter(a => !!a)
-      this.fetchEvents()
+      if (e.length === 0) {
+        this.CLEAR_MATCHES()
+      } else {
+        this.games = e
+        this.gameIDs = this.games.map(a => GAMES_TO_ID[a]).filter(a => !!a)
+        this.fetchEvents()
+      }
     },
     formatMonth (d) {
       return moment(d).format('MMMM')

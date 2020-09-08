@@ -5,8 +5,11 @@
         <div :style="{backgroundImage:`url(${gameImage(match.gameID)})`}" class="img" />
       </div>
       <div class="match-name">
-        <p class="title">
-          {{ match.name }}
+        <p v-if="match.resultSet" class="title">
+          {{ match.teams.find(team => team.id === match.resultSet.winningTeamId).name }} Vs {{ match.teams.find(team => team.id === match.resultSet.losingTeamId).name }}
+        </p>
+        <p v-else class="title">
+          {{ match.teams[0].name }} - {{ match.teams[1].name }}
         </p>
       </div>
     </div>
@@ -37,7 +40,7 @@
         </div>
         <div :style="{backgroundImage:`url(${ match.teams[1].logoUrl })`}" class="img" />
       </div>
-      <div class="watch-link">
+      <div v-if="inPast()" class="watch-link">
         <a href="#">View Replay</a>
       </div>
     </div>
@@ -55,12 +58,13 @@
 <script>
 import moment from 'moment'
 import _get from 'lodash/get'
-export const TEAM_IDS = [66, 76, 485, 626]
+export const TEAM_IDS = [431, 607, 702, 842, 885, 1066, 1275, 1690, 1970, 2012, 3635, 3977, 1275]
 export const GAME_ID_TO_IMAGE = {
   1: '/images/rlcs.png',
   2: '/images/overwatch.png',
   3: '/images/cod.png',
-  4: '/images/csgo.png'
+  4: '/images/csgo.png',
+  5: '/images/valorant.png'
 }
 export default {
   props: {
@@ -84,6 +88,9 @@ export default {
     },
     gameImage (id) {
       return GAME_ID_TO_IMAGE[id]
+    },
+    inPast () {
+      return moment(this.match.date).isBefore(moment())
     }
   }
 }
@@ -114,6 +121,7 @@ export default {
         align-self: center;
         left: 0;
         .img {
+          background-position: left;
           height: 100%;
           width: 100%;
         }
@@ -130,6 +138,13 @@ export default {
       grid-template-columns: 1fr 1fr 1fr;
       align-items: center;
       .match-date {
+        .date{
+          padding-bottom: 5px;
+          color:$blueGray;
+        }
+        .time{
+          color:$blueGray;
+        }
         color: $blueGray;
       }
       .scores {
@@ -154,6 +169,7 @@ export default {
       }
       .watch-link {
         justify-self: flex-end;
+        letter-spacing: 2px;
       }
     }
     .bottom {

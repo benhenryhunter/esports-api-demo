@@ -32,12 +32,15 @@ export default {
       commit(Mutation.SET_ERROR, error)
     }
   },
-  async [Action.GET_UPCOMING_MATCHES] ({ commit, state }, { gameIDs }) {
+  async [Action.GET_UPCOMING_MATCHES] ({ commit }, { gameIDs }) {
     try {
       const response = await axios.get(`${process.env.API_URL}/teams/${TEAM_IDS.join(',')}/matches?dateAfter=${moment().subtract(1, 'day').startOf('day').format('YYYY-MM-DD')}&match.game_id=${gameIDs.join(',')}`)
       commit(Mutation.SET_UPCOMING_MATCHES, response.data.data)
     } catch (error) {
       commit(Mutation.SET_ERROR, error)
     }
+  },
+  [Action.CLEAR_MATCHES] ({ commit }) {
+    commit(Mutation.CLEAR_MATCHES)
   }
 }
