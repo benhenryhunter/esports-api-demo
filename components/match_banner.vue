@@ -1,15 +1,12 @@
 <template>
-  <div class="match-banner">
+  <div :id="match.id" class="match-banner">
     <div class="top">
       <div class="game">
         <div :style="{backgroundImage:`url(${gameImage(match.gameID)})`}" class="img" />
       </div>
       <div class="match-name">
-        <p v-if="match.resultSet" class="title">
-          {{ match.teams.find(team => team.id === match.resultSet.winningTeamId).name }} Vs {{ match.teams.find(team => team.id === match.resultSet.losingTeamId).name }}
-        </p>
-        <p v-else class="title">
-          {{ match.teams[0].name }} - {{ match.teams[1].name }}
+        <p class="title">
+          {{ teamA.name }} Vs {{ teamB.name }}
         </p>
       </div>
     </div>
@@ -23,22 +20,22 @@
         </div>
       </div>
       <div v-if="match.resultSet" class="scores">
-        <div :style="{backgroundImage:`url(${ match.teams.find(team => team.id === match.resultSet.winningTeamId).logoUrl })`}" class="img" />
+        <div :style="{backgroundImage:`url(${ teamALogo })`}" class="img" />
         <div class="scoring">
           <p class="score">
-            {{ get(match,'resultSet.winningTeamScore','') }} - {{ get(match,'resultSet.losingTeamScore','') }}
+            {{ teamAScore }} - {{ teamBScore }}
           </p>
         </div>
-        <div :style="{backgroundImage:`url(${ match.teams.find(team => team.id === match.resultSet.losingTeamId).logoUrl })`}" class="img" />
+        <div :style="{backgroundImage:`url(${ teamBLogo })`}" class="img" />
       </div>
       <div v-else class="scores">
-        <div :style="{backgroundImage:`url(${ match.teams[0].logoUrl })`}" class="img" />
+        <div :style="{backgroundImage:`url(${ teamALogo })`}" class="img" />
         <div class="scoring">
           <p class="score">
             vs
           </p>
         </div>
-        <div :style="{backgroundImage:`url(${ match.teams[1].logoUrl })`}" class="img" />
+        <div :style="{backgroundImage:`url(${ teamBLogo })`}" class="img" />
       </div>
       <div v-if="inPast()" class="watch-link">
         <a href="#">View Replay</a>
@@ -58,7 +55,7 @@
 <script>
 import moment from 'moment'
 import _get from 'lodash/get'
-export const TEAM_IDS = [431, 607, 702, 842, 885, 1066, 1275, 1690, 1970, 2012, 3635, 3977, 1275]
+export const TEAM_IDS = [680, 3963, 4502, 5210, 5673, 6185, 904, 1261, 909, 6381, 412, 53, 504]
 export const GAME_ID_TO_IMAGE = {
   1: '/images/rlcs.png',
   2: '/images/overwatch.png',
@@ -71,6 +68,26 @@ export default {
     match: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    teamA () {
+      return this.match.teams[0]
+    },
+    teamB () {
+      return this.match.teams[1]
+    },
+    teamAScore () {
+      return this.teamA.id === this.match.resultSet.winningTeamId ? this.match.resultSet.winningTeamScore : this.match.resultSet.losingTeamScore
+    },
+    teamBScore () {
+      return this.teamA.id !== this.match.resultSet.winningTeamId ? this.match.resultSet.winningTeamScore : this.match.resultSet.losingTeamScore
+    },
+    teamALogo () {
+      return encodeURI(this.teamA.logoUrl)
+    },
+    teamBLogo () {
+      return encodeURI(this.teamB.logoUrl)
     }
   },
   methods: {

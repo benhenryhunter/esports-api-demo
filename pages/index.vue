@@ -5,11 +5,11 @@
       <Matchcard v-for="match in liveMatches" :match="match" />
     </div>
     <div v-if="results">
-      <div class="matches-list">
+      <div v-if="currentMonthMatches.filter((match) => match.date <= new Date()).length" class="matches-list">
         <div class="title">
           <p>This Month</p>
         </div>
-        <Matchbanner v-for="match in currentMonthMatches" :match="match" />
+        <Matchbanner v-for="match in currentMonthMatches.filter((match) => match.date <= new Date())" :match="match" />
       </div>
       <div class="matches-list">
         <div class="title">
@@ -51,7 +51,7 @@ import moment from 'moment'
 import Topbar from '~/components/topbar.vue'
 import Matchcard from '~/components/match_card.vue'
 import Matchbanner from '~/components/match_banner.vue'
-export const TEAM_IDS = [431, 607, 702, 842, 885, 1066, 1275, 1690, 1970, 2012, 3635, 3977, 1275]
+export const TEAM_IDS = [680, 3963, 4502, 5210, 5673, 6185, 904, 1261, 909, 6381, 412, 53, 504]
 export const GAMES_TO_ID = {
   'rlcs': 1,
   'overwatch': 2,
