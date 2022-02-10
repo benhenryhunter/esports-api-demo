@@ -21,7 +21,7 @@
     "eslint-plugin-nuxt": ">=0.4.2",
     "lodash": "^4.17.19",
     "moment": "^2.27.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "nuxt": "^2.0.0",
     "nuxt-socket-io": "^1.1.6",
     "sass-loader": "^8.0.2"
